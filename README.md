@@ -1,4 +1,5 @@
 ## Available Scripts
+### `Change the name from ResShare-Frontend to app (if you run without changing the name, errors might come)`
 
 In the project directory, you can run:
 
