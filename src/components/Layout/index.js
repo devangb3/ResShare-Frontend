@@ -3,12 +3,14 @@ import { extendTheme, styled } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import PeopleIcon from '@mui/icons-material/People';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { PageContainer } from '@toolpad/core/PageContainer';
 import FileUploadBox from './../UploadBox';
 // import OutlinedCard from './../Card';
 import Library from './../Library';
+import PeersList from '../Peers';
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -57,9 +59,9 @@ const DashboardLayoutBasic = (props) => {
       icon: <CloudUploadIcon />,
     },
     {
-      segment: 'users',
-      title: 'Users',
-      icon: <CloudUploadIcon />,
+      segment: 'peers',
+      title: 'Peers',
+      icon: <PeopleIcon />,
     },
   ];
   
@@ -88,6 +90,9 @@ const DashboardLayoutBasic = (props) => {
       return (
         <Library/>
       );
+    }
+    else if(pathname === '/peers'){
+      return <PeersList/>
     }
     else {
       return <Box>hiughuh</Box>;
