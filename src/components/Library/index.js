@@ -73,7 +73,6 @@ const Library = () => {
       />
       <Grid container spacing={8}>
         {console.log(files, '0000000000000000')}
-        {
         {loading ? (
           <Backdrop
             sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer - 1 })}
