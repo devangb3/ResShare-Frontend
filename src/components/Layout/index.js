@@ -4,6 +4,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import PeopleIcon from '@mui/icons-material/People';
+import StarIcon from '@mui/icons-material/Star';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { PageContainer } from '@toolpad/core/PageContainer';
@@ -17,6 +18,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Divider, Typography } from '@mui/material';
 import UploadPage from '../UploadPage';
+import FavoritePeersList from '../FavPeers/FavoritePeersList';
 // import axios from 'axios';
 // import useDemoRouter from './../DefaultRouter';
 
@@ -63,6 +65,11 @@ const DashboardLayoutBasic = (props) => {
       title: 'Peers',
       icon: <PeopleIcon />,
     },
+    {
+      segment: 'favorites',
+      title: 'Favorites',
+      icon: <StarIcon />,
+    },
   ];
   
   const demoTheme = extendTheme({
@@ -93,6 +100,9 @@ const DashboardLayoutBasic = (props) => {
     }
     else if(pathname === '/peers'){
       return <PeersList/>
+    }
+    else if(pathname === '/favorites'){
+      return <FavoritePeersList/>
     }
     else {
       return <Box>hiughuh</Box>;
