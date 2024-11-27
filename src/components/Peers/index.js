@@ -12,7 +12,7 @@ const PeersList = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredPeers, setFilteredPeers] = useState([]);
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [favoritePeers, setFavoritePeers] = useState([]);
+  const [favoritePeers, setFavoritePeers] = useState({});
 
   useEffect(() => {
     const fetchPeersData = async () => {
@@ -42,7 +42,7 @@ const PeersList = () => {
         const response = await fetch('http://localhost:5000/fav_peers');
         if (response.ok) {
           const data = await response.json();
-          setFavoritePeers(data);
+          setFavoritePeers(data.data || {}); // Adjust to handle the nested `data` object
         }
       } catch (err) {
         console.error('Failed to fetch favorite peers:', err);
@@ -82,7 +82,7 @@ const PeersList = () => {
         return;
       }
       const updatedFavorites = await response.json();
-      setFavoritePeers(updatedFavorites); // Update the favorite peers list
+      setFavoritePeers(updatedFavorites.data || {}); // Update the favorite peers list with nested `data`
     } catch (err) {
       console.error('Failed to add favorite:', err);
     }
@@ -140,7 +140,7 @@ const PeersList = () => {
             addresses={peerData.peerAddressMap[peerId] || []}
             onAddFavorite={handleAddFavorite}
             onRemoveFavorite={handleRemoveFavorite}
-            isFavorite={favoritePeers[peerId] !== undefined}
+            isFavorite={!!favoritePeers[peerId]} // Check if the peer is in the `favoritePeers` object
           />
         ))
       ) : (

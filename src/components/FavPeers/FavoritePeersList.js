@@ -23,9 +23,13 @@ const FavoritePeersList = () => {
       if (!response.ok) {
         throw new Error('Failed to fetch favorite peers.');
       }
-      const data = await response.json();
-      setFavoritePeers(data || {});
-      setFilteredPeers(data || {});
+      const result = await response.json();
+      if (result.status === 'success' && result.data) {
+        setFavoritePeers(result.data || {});
+        setFilteredPeers(result.data || {});
+      } else {
+        throw new Error('Invalid response structure.');
+      }
     } catch (error) {
       setErrorMessage(error.message);
     } finally {
@@ -219,4 +223,3 @@ const FavoritePeersList = () => {
 };
 
 export default FavoritePeersList;
-
