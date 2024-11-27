@@ -1,38 +1,60 @@
 /* General Card Styling */
 .peer-card {
-    margin: 16px;
-    padding: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Flexbox for Inline Alignment */
-  .peer-card-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  /* Peer Text Styling */
-  .peer-text {
-    font-size: 16px;
-    color: #333;
-  }
-  
-  /* Icon Button Styling */
-  .peer-button {
-    padding: 4px;
-    color: gray;
-    background-color: transparent;
-    transition: background-color 0.3s ease;
-  }
-  
-  .peer-button:hover {
-    background-color: #f5f5f5;
-  }
-  
-  .highlighted-star {
-    color: gold;
-  }
-  
+  margin: 16px;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: white; /* Light mode background */
+  color: #333; /* Light mode text */
+}
+
+/* Dark mode card styling */
+.dark .peer-card {
+  border: 1px solid #555; /* Subtle border for dark mode */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Stronger shadow in dark mode */
+  background-color: #222; /* Dark mode background */
+  color: #e0e0e0; /* Light text for contrast */
+}
+
+/* Flexbox for Inline Alignment */
+.peer-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Peer Text Styling */
+.peer-text {
+  font-size: 16px;
+  color: #333; /* Default light mode text color */
+}
+
+.dark .peer-text {
+  color: #e0e0e0; /* Text color in dark mode */
+}
+
+/* Icon Button Styling */
+.peer-button {
+  padding: 4px;
+  color: gray; /* Default icon button color */
+  background-color: transparent;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark .peer-button {
+  color: #ccc; /* Lighter button color in dark mode */
+}
+
+.peer-button:hover {
+  background-color: #f5f5f5; /* Light mode hover background */
+}
+
+.dark .peer-button:hover {
+  background-color: #333; /* Dark mode hover background */
+}
+
+/* Highlighted Star Styling */
+.highlighted-star {
+  color: gold;
+}
