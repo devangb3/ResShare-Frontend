@@ -45,7 +45,7 @@ const OutlinedCard = (props) => {
       // const downloadPath = `${process.env.HOME}/Downloads`;
       // const defaultDownloadDir = 
       const response = await axios.post('http://localhost:5000/download', {cid: `${props.fileInfo.CID}`, filename: `${props.fileInfo.fileName}`});
-      setMessage("File Downloaded Successfully");  
+      setMessage("File Downloaded successfully, check your downloads folder");  
       setOpen(true);
     } catch (err) {
       console.error("Failed to fetch files:", err);
