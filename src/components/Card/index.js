@@ -22,6 +22,8 @@ import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
 const OutlinedCard = (props) => {
 
   const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+
 
   const truncateText = (text, limit) => (text.length > limit ? `${text.slice(0, limit)}...` : text);
 
@@ -42,11 +44,25 @@ const OutlinedCard = (props) => {
       // console.log(process.env, 'ppppppppppppppppp')
       // const downloadPath = `${process.env.HOME}/Downloads`;
       // const defaultDownloadDir = 
-      const downloadPath = "/home/prasanna/UCD"
-      const response = await axios.post('http://localhost:5000/download', {cid: `${props.fileInfo.CID}`, file_path: `${downloadPath}`});      
+      const response = await axios.post('http://localhost:5000/download', {cid: `${props.fileInfo.CID}`, filename: `${props.fileInfo.fileName}`});
+      setMessage("File Downloaded Successfully");  
       setOpen(true);
     } catch (err) {
       console.error("Failed to fetch files:", err);
+    }
+  };
+
+  const deleteFile = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/delete', {cid: `${props.fileInfo.CID}`});
+      const delete_status = response.data.status;
+      setMessage(delete_status);  
+      setOpen(true);
+      if (delete_status == "File deleted successfully") {
+        props.onDelete(props.fileInfo.CID);
+      }      
+    } catch (err) {
+      console.error("Failed to delete file:", err);
     }
   };
 
@@ -114,7 +130,7 @@ const action = (
       {/* Action Buttons */}
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', padding: '4px 8px' }}>
         <Tooltip title="Delete" arrow>
-          <IconButton color="primary" aria-label="Delete">
+          <IconButton color="primary" aria-label="Delete"  onClick={deleteFile}>
             <DeleteOutlineRoundedIcon />
           </IconButton>
         </Tooltip>
@@ -125,7 +141,7 @@ const action = (
         </Tooltip>
       </Box>
     </Card>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={4000} onClose={handleClose} message="File Dowloaded Successfully" action={action}/>  
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={4000} onClose={handleClose} message={message} action={action}/>  
     </Box>
   );
 }
