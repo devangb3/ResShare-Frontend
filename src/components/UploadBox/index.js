@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, Typography, Button, IconButton } from '@mui/material';
+import { Close as CloseIcon } from '@mui/icons-material';
 
-const FileUploadBox = ({ height, onFilePathChange }) => {
+const FileUploadBox = ({ height, onFilePathChange, onUploadComplete }) => {
+    const [files, setFiles] = useState([]);
     const [fileNames, setFileNames] = useState([]);
 
     const handleDrop = (event) => {
         event.preventDefault();
-        const files = Array.from(event.dataTransfer.files);
-        setFileNames(files.map((file) => file.name));
-
-        // Send File objects to parent
-        onFilePathChange(files);
+        const droppedFiles = Array.from(event.dataTransfer.files);
+        handleFileSelection(droppedFiles);
     };
 
     const handleDragOver = (event) => {
@@ -18,12 +17,42 @@ const FileUploadBox = ({ height, onFilePathChange }) => {
     };
 
     const fileUpload = (event) => {
-        const files = Array.from(event.target.files);
-        setFileNames(files.map((file) => file.name));
-
-        // Send File objects to parent
-        onFilePathChange(files);
+        const selectedFiles = Array.from(event.target.files);
+        handleFileSelection(selectedFiles);
+        event.target.value = null; // Reset input to allow re-selection of the same file
     };
+
+    const handleFileSelection = (selectedFiles) => {
+        const newFiles = [...files, ...selectedFiles];
+        const newFileNames = [...fileNames, ...selectedFiles.map((file) => file.name)];
+
+        setFiles(newFiles);
+        setFileNames(newFileNames);
+
+        // Notify parent about selected files
+        onFilePathChange(newFiles);
+    };
+
+    const removeFile = (index) => {
+        const updatedFiles = files.filter((_, fileIndex) => fileIndex !== index);
+        const updatedFileNames = fileNames.filter((_, fileIndex) => fileIndex !== index);
+
+        setFiles(updatedFiles);
+        setFileNames(updatedFileNames);
+
+        // Notify parent with updated files
+        onFilePathChange(updatedFiles);
+    };
+
+    useEffect(() => {
+        // Wait for parent acknowledgment to clear files
+        if (files.length > 0 && typeof onUploadComplete === 'function') {
+            onUploadComplete(() => {
+                setFiles([]);
+                setFileNames([]);
+            });
+        }
+    }, [files, onUploadComplete]);
 
     return (
         <Box
@@ -64,7 +93,18 @@ const FileUploadBox = ({ height, onFilePathChange }) => {
                     <Typography variant="subtitle1">Uploaded Files:</Typography>
                     <ul>
                         {fileNames.map((name, index) => (
-                            <li key={index}>{name}</li>
+                            <li key={index} style={{ display: 'flex', alignItems: 'center' }}>
+                                <Typography variant="body2" sx={{ flexGrow: 1 }}>
+                                    {name}
+                                </Typography>
+                                <IconButton
+                                    aria-label="remove file"
+                                    onClick={() => removeFile(index)}
+                                    size="small"
+                                >
+                                    <CloseIcon />
+                                </IconButton>
+                            </li>
                         ))}
                     </ul>
                 </Box>

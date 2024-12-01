@@ -66,9 +66,12 @@ const UploadPage = () => {
     return (
         <>
             <Grid container spacing={4} sx={{ marginTop: '2vh', alignItems: 'center' }}>
-                <Grid item xs={7}>
+                {/* Upload Box Section */}
+                <Grid item xs={6}>
                     <FileUploadBox height="40vh" onFilePathChange={handleFilePathChange} />
                 </Grid>
+
+                {/* Divider with OR */}
                 <Grid item xs={1}>
                     <Box
                         sx={{
@@ -88,40 +91,53 @@ const UploadPage = () => {
                         />
                         <Typography
                             variant="body1"
-                            sx={{
+                            sx={(theme) => (  theme === "dark" ? {
                                 position: 'absolute',
                                 backgroundColor: 'white',
                                 padding: '0 8px',
                                 top: '50%',
                                 transform: 'translateY(-50%)',
-                            }}
+                            } : {
+                                position: 'absolute',
+                                backgroundColor: 'dark',
+                                padding: '0 8px',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                            })}
+
                         >
                             OR
                         </Typography>
                     </Box>
                 </Grid>
-                <Grid item xs={4}>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <TextField
-                            id="outlined-basic"
-                            placeholder="Enter the path for the file"
-                            variant="outlined"
-                            sx={{ width: '100%' }}
-                            onChange={(e) => getProvidedPath(e.target.value)}
-                            value={providedPath}
-                        />
-                        <Box sx={{ marginLeft: '12px' }}>
-                            <Button
-                                variant="contained"
-                                sx={{ padding: '14px' }}
-                                onClick={uploadFile}
-                                disabled={!providedPath && files.length === 0}
-                            >
-                                Upload
-                            </Button>
-                        </Box>
+
+                {/* File Path Section */}
+                <Grid item xs={5}>
+                    <TextField
+                        id="outlined-basic"
+                        placeholder="Enter the path for the file"
+                        variant="outlined"
+                        sx={{ width: '100%' }}
+                        onChange={(e) => getProvidedPath(e.target.value)}
+                        value={providedPath}
+                    />
+                </Grid>
+
+                {/* Common Upload Button */}
+                <Grid item xs={12}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            sx={{ padding: '14px 24px' }}
+                            onClick={uploadFile}
+                            disabled={!providedPath && files.length === 0}
+                        >
+                            Upload
+                        </Button>
                     </Box>
                 </Grid>
+
                 <Snackbar
                     open={open}
                     autoHideDuration={4000}
