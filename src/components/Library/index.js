@@ -13,7 +13,6 @@ const Library = () => {
 
   const getAllFiles = async () => {
     try {
-      console.log('hiii');
       const response = await axios.get('http://localhost:5000/all_files');   
       if (response.data && response.data.data.length > 0) {
         setFiles(response.data.data);
@@ -36,7 +35,6 @@ const Library = () => {
   return (
     <>
       <Grid container spacing={8}>
-        {console.log(files, '0000000000000000')}
         {
           loading ?
           <Backdrop
