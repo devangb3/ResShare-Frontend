@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Card, CardContent, Typography, IconButton, Button, CircularProgress } from '@mui/material';
+import { Box, Card, CardContent, Typography, IconButton, Button, CircularProgress, Snackbar } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
@@ -15,6 +15,10 @@ const FavoritePeersList = () => {
   const [newNickname, setNewNickname] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+
+  const truncateText = (text, limit) => (text.length > limit ? `${text.slice(0, limit)}...` : text);
 
   // Fetch favorite peers
   const fetchFavoritePeers = async () => {
@@ -50,6 +54,8 @@ const FavoritePeersList = () => {
       delete updatedPeers[peerId];
       setFavoritePeers(updatedPeers);
       setFilteredPeers(updatedPeers);
+      setSnackbarMessage('Removed from Favorites');
+      setSnackbarOpen(true);
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -76,6 +82,8 @@ const FavoritePeersList = () => {
       }));
       setEditingPeerId(null);
       setNewNickname('');
+      setSnackbarMessage('Nickname updated successfully');
+      setSnackbarOpen(true);
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -105,6 +113,11 @@ const FavoritePeersList = () => {
 
     setFilteredPeers(filtered);
     setDropdownVisible(!!query);
+  };
+
+  // Handle Snackbar close
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   // Handle file selection (required by SearchBar but not used in this case)
@@ -195,7 +208,7 @@ const FavoritePeersList = () => {
                       </Typography>
                     )}
                     <Typography variant="body2" color="textSecondary">
-                      Peer ID: {peerId}
+                      Peer ID: {truncateText(peerId, 20)}
                     </Typography>
                     <Box display="flex" justifyContent="flex-end" gap={1} mt={2}>
                       <IconButton
@@ -218,6 +231,14 @@ const FavoritePeersList = () => {
           ))}
         </Box>
       )}
+      {/* Snackbar */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        message={snackbarMessage}
+      />
     </Box>
   );
 };

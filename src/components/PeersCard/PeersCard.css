@@ -1,10 +1,12 @@
 /* General Card Styling */
 .peer-card {
-  margin: 16px;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 16px;
   padding: 16px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); */
   background-color: white; /* Light mode background */
   color: #333; /* Light mode text */
 }
@@ -12,7 +14,7 @@
 /* Dark mode card styling */
 .dark .peer-card {
   border: 1px solid #555; /* Subtle border for dark mode */
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Stronger shadow in dark mode */
+  /*box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);  Stronger shadow in dark mode */
   background-color: #222; /* Dark mode background */
   color: #e0e0e0; /* Light text for contrast */
 }
