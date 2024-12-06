@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { extendTheme, styled } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -40,6 +40,10 @@ function useDemoRouter(initialPath) {
 const DashboardLayoutBasic = (props) => {
   const { window } = props;
   const router = useDemoRouter('/dashboard');
+
+  useEffect(() => {
+    document.title = 'ResShare';
+  }, []);
 
   const NAVIGATION = [
     {
