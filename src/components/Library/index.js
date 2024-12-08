@@ -30,6 +30,7 @@ const Library = () => {
 
   const handleDelete = (cid) => {
     setFiles(files.filter(file => file.CID != cid))
+    setFilteredFiles(filteredFiles.filter(file => file.CID != cid))
   }
 
   const handleSearchChange = (e) => {
@@ -84,7 +85,7 @@ const Library = () => {
       />
       <Grid container spacing={8}>
         {filteredFiles.length > 0 ? (
-          filteredFiles.map((file) => <OutlinedCard key={file.CID} fileInfo={file} />)
+          filteredFiles.map((file) => <OutlinedCard key={file.CID} fileInfo={file} onDelete={handleDelete}/>)
         ) : (
           <NoFilesFound />
         )}

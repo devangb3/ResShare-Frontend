@@ -56,8 +56,6 @@ const OutlinedCard = (props) => {
     try {
       const response = await axios.post('http://localhost:5000/delete', {cid: `${props.fileInfo.CID}`});
       const delete_status = response.data.status;
-      setMessage(delete_status);  
-      setOpen(true);
       if (delete_status == "File deleted successfully") {
         props.onDelete(props.fileInfo.CID);
       }      
