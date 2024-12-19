@@ -1,6 +1,7 @@
 ## Available Scripts
 ### `Change the name from ResShare-Frontend to app (if you run without changing the name, errors might come)`
 
+Setup the backend : "https://github.com/devangb3/ResShare_Backend/"
 In the project directory, you can run:
 
 ### `npm i`
